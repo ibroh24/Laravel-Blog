@@ -18,8 +18,13 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
-    public function getFeaturedAttribute($featured)
+    // public function getFeaturedAttribute($featured)
+    // {
+    //     return asset($featured);    
+    // }
+
+    public function tags()
     {
-        return asset($featured);    
+        return $this->belongsToMany('App\Tag');
     }
 }

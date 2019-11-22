@@ -26,10 +26,29 @@
                     <textarea id="content" class="form-control" name="postcontent" rows="5" cols="5">{{$editPost->postcontent}}</textarea>
                 </div>
                 <div class="form-group">
+                    <label for='tags'>Select Tag:</label>
+                    @foreach ($tags as $tag)
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="{{$tag->id}}" name="tags[]" 
+                                @foreach ($editPost->tags as $assoc)
+                                    @if ($tag->id == $assoc->id)
+                                        checked    {{--disabled --}}
+                                    @endif
+                                @endforeach
+                            > {{$tag->tag}}</label>
+                            
+                        </div>
+                    @endforeach
+                </div>
+                <div class="form-group">
                         <label for="categoryid">Select Post Category</label>
                         <select id="categoryid" class="custom-select" value="{{$editPost->postCategory}}" name="categoryid">
                             @foreach ($catKey as $item)
-                            <option value="{{$item->id}}">{{$item->categoryname}}</option>    
+                            <option value="{{$item->id}}"
+                                @if ($editPost->item == $item->id)
+                                    selected
+                                @endif
+                            >{{$item->categoryname}}</option>    
                             @endforeach  
                         </select>
                     {{-- </div> --}}

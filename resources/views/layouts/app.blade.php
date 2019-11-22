@@ -83,6 +83,18 @@
                             <li class="list-group-item">
                             <a href="{{ route('home') }}">Home</a>
                             </li>
+
+                             @if (Auth::user()->admin)
+                                <li class="list-group-item">
+                                    <a href="{{ route('user.create') }}">Create New User</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('user.index') }}">View All Users</a>
+                                </li>
+                             @endif
+                             <li class="list-group-item">
+                                <a href="{{ route('profile.index') }}">My Profile</a>
+                            </li>
                             <li class="list-group-item">
                                 <a href="{{ route('category.create') }}">Create New Category</a>
                             </li>
@@ -98,6 +110,18 @@
                             <li class="list-group-item">
                                 <a href="{{ route('post.trashed') }}">View All Trash Posts</a>
                             </li>
+
+                            <li class="list-group-item">
+                                <a href="{{ route('tag.index') }}">View Tags</a>    
+                            </li>
+                             <li class="list-group-item">
+                                <a href="{{ route('tag.create') }}">Create New Tag</a>
+                            </li>
+                            @if (Auth::user()->admin)
+                                <li class="list-group-item">
+                                    <a href="{{ route('setting.index') }}">Site Settings</a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     @endif
@@ -111,14 +135,14 @@
     </div>
 
     <script src="{{ asset('js/toastr.min.js') }}"></script>
-    <script>
-        if(Session::has('success'))
-            toastr.success("{{ Session::get('success') }}");
-        // endif
-        if(Session::has('info'))
-            toastr.success("{{ Session::get('info') }}");
-        // endif
-</script>
+    {{-- <script> --}}
+        @if(Session::has('success'))
+           <script>toastr.success("{{ Session::get('success') }}");</script>
+        @endif
+        @if(Session::has('info'))
+           <script>toastr.success("{{ Session::get('info') }}"); </script>
+        @endif
+{{-- </script> --}}
 </body>
 </html>
 

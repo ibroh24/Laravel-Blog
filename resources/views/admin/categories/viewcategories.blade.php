@@ -28,7 +28,7 @@
         @else
         <tr>
             <th colspan="5" class="text-center">
-                <h4> There is no CategoryYet</h4>
+                <h4> There is no Category Yet</h4>
             </th>
         </tr>
             

@@ -26,6 +26,14 @@
                     <textarea id="content" class="form-control" name="postcontent" rows="5" cols="5"></textarea>
                 </div>
                 <div class="form-group">
+                    <label for='tags'>Select Tag:</label>
+                    @foreach ($tags as $tag)
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="{{$tag->id}}" name="tags[]"> {{$tag->tag}}</label>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="form-group">
                         <label for="categoryid">Select Post Category</label>
                         <select id="categoryid" class="custom-select" name="categoryid">
                             @foreach ($catKey as $item)

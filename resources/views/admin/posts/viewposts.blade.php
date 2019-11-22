@@ -22,7 +22,7 @@
                     <a href="{{ route('post.destroy', ['id'=>$post->id]) }}" class="btn btn-sm btn-danger glyphicon glyphicon-pencil">X</a> <span>|</span>
                     <a href="{{ route('post.edit', ['id'=>$post->id]) }}" class="btn btn-sm btn-success">Edt</a> 
                 </td>
-                <td><img src="{{$post->featured}}" alt="{{$post->slug}}" width="70px" height="70px"></td>
+                <td><img src="{{asset($post->featured)}}" alt="{{$post->slug}}" width="70px" height="70px"></td>
                 <td>{{$post->posttitle}}</td>
                 <td>{{$post->postcontent}}</td>
                 

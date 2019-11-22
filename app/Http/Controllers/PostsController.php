@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\Tag;
 // use Symfony\Component\HttpFoundation\Session\Session;
 // use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -31,12 +32,19 @@ class PostsController extends Controller
     public function create()
     {
         $checkCategories = Category::all();
+        $checkTags = Tag::all();
 
-        if($checkCategories->count()== 0){
+        if($checkCategories->count() == 0){
             session::flash('info', 'Please create categories first');
             return redirect()->route('category.create');
+        }elseif ($checkTags->count()==0) {
+            session::flash('info', 'Please create yags first');
+            return redirect()->route('tag.create');
         }
-        return view('admin.posts.create')->with('catKey', $checkCategories);
+        return view('admin.posts.create')->
+        with('catKey', $checkCategories)->
+        with('tags', Tag::all());
+
     }
 
     /**
@@ -47,14 +55,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
             'posttitle' => 'required|max:100',
             'featured' => 'required',
             'postcontent' => 'required',
             'categoryid' => 'required',
-            // 'slug' => 'required'
+            'tags' => 'required'
         ]);
-        // dd($request->all());
+        
         $featured = $request->featured;
         $featuredNewName = time().$featured->getClientOriginalName();
         $featured->move('uploads/postImages', $featuredNewName);
@@ -69,11 +78,9 @@ class PostsController extends Controller
                 'slug' => str_slug($request->posttitle)
             ]);
 
-        // $postSave->posttitle = $request->posttitle;
-        // $postSave->featured = $request->featured;
-        // $postSave->postcontent = $request->postcontent;
-        // $postSave->categoryid = $request->categoryid;
-                // dd($request->all());
+        // when creating many to many field
+        $postSave->tags()->attach($request->tags);
+        // dd($request->all());
         $postSave->save();
 
         session::flash('success', "Post Created Successfully");
@@ -104,7 +111,10 @@ class PostsController extends Controller
     public function edit($id)
     {
         $editPost = Post::find($id);
-        return view('admin.posts.update')->with('editPost', $editPost)->with('catKey', Category::all());
+        return view('admin.posts.update')->
+        with('editPost', $editPost)->
+        with('catKey', Category::all())->
+        with('tags', Tag::all());
     }
 
     /**
@@ -121,6 +131,7 @@ class PostsController extends Controller
             // 'featured' => 'required',
             'postcontent' => 'required',
             'categoryid' => 'required',
+            'tags' => 'required'
         ]);
         $updates = Post::find($id);
 
@@ -135,6 +146,13 @@ class PostsController extends Controller
         // $updates->featured = $request->featured;
         $updates->postcontent = $request->postcontent;
         $updates->categoryid = $request->categoryid;
+
+        // $updates->tags()->attach($request->tags);
+        
+        // when updating many to many field, though, the attach method will work, 
+        // but will create another field in db, but the sync will delete and recreate 
+        // the new edited values.
+        $updates->tags()->sync($request->tags);
 
         $updates->save();
         return redirect()->route('post.index');
