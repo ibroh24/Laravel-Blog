@@ -13,9 +13,7 @@
 
 use App\Http\Controllers\UsersController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'BlogsController@index')->name('index');
 
 Auth::routes();
 

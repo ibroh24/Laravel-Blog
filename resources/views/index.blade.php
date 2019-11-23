@@ -3,21 +3,21 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Seosight - Index Page</title>
+    <title>{{$title}}</title>
 
-    <link rel="stylesheet" type="text/css" href="app/css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="app/css/crumina-fonts.css">
-    <link rel="stylesheet" type="text/css" href="app/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="app/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="app/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/fonts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/crumina-fonts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/normalize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/grid.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/styles.css') }}">
 
 
     <!--Plugins styles-->
 
-    <link rel="stylesheet" type="text/css" href="app/css/jquery.mCustomScrollbar.min.css">
-    <link rel="stylesheet" type="text/css" href="app/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="app/css/primary-menu.css">
-    <link rel="stylesheet" type="text/css" href="app/css/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/jquery.mCustomScrollbar.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/swiper.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/primary-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app/css/magnific-popup.css') }}">
 
     <!--Styles for RTL-->
 
@@ -42,53 +42,7 @@
 
 <div class="content-wrapper">
     
-    <header class="header" id="site-header">
-        <div class="container">
-                <div class="header-content-wrapper">
-                    <div class="logo">
-                        <div class="logo-text">
-                            <div class="logo-title">LARAVEL'S BLOG</div>
-                        </div>
-                    </div>
-
-                    <nav id="primary-menu" class="primary-menu">
-                        <a href='javascript:void(0)' id="menu-icon-trigger" class="menu-icon-trigger showhide">
-                            <span id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: hidden">
-                                <svg width="1000px" height="1000px">
-                                    <path id="pathD" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
-                                    <path id="pathE" d="M 300 500 L 700 500"></path>
-                                    <path id="pathF" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
-                                </svg>
-                            </span>
-                        </a>
-                        <ul class="primary-menu-menu" style="overflow: hidden;">
-                            <li class="">
-                                <a href="">NEWS</a>
-                            </li>
-                            <li class="">
-                                <a href="">VIDEOS</a>
-                            </li>
-                            <li class="">
-                                <a href="">DISCUSSIONS</a>
-                            </li>
-                            <li class="">
-                                <a href="">TUTORIALS</a>
-                            </li>
-                            <li class="">
-                                <a href="">NEWSLETTER</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <ul class="nav-add">
-                        <li class="search search_main" style="color: black; margin-top: 5px;">
-                            <a href="#" class="js-open-search">
-                                <i class="seoicon-loupe"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-        </div>
-    </header>
+    @include('includes.header');
 
     <div class="header-spacer"></div>
 
@@ -99,11 +53,12 @@
                 <article class="hentry post post-standard has-post-thumbnail sticky">
 
                         <div class="post-thumb">
-                            <img src="app/img/1.png" alt="seo">
+                        <img src="{{$firstPost->featured}}" alt="{{$firstPost->title}}">
                             <div class="overlay"></div>
-                            <a href="app/img/post1.jpg" class="link-image js-zoom-image">
+                            <a href="{{$firstPost->featured}}" class="link-image js-zoom-image">
                                 <i class="seoicon-zoom"></i>
                             </a>
+                            
                             <a href="#" class="link-post">
                                 <i class="seoicon-link-bold"></i>
                             </a>
@@ -113,8 +68,8 @@
 
                             <div class="post__content-info">
 
-                                    <h2 class="post__title entry-title ">
-                                        <a href="15_blog_details.html">The Important & Standard Post Format</a>
+                                    <h2 class="post__title entry-title text-center">
+                                    <a href="">{{$firstPost->posttitle}}</a>
                                     </h2>
 
                                     <div class="post-additional-info">
@@ -124,14 +79,15 @@
                                             <i class="seoicon-clock"></i>
 
                                             <time class="published" datetime="2016-04-17 12:00:00">
-                                                April 17, 2016
+                                                {{-- carbon class format dates  ie diffForHuman function--}}
+                                                {{$firstPost->created_at->diffForHumans()}}
                                             </time>
 
                                         </span>
 
                                         <span class="category">
                                             <i class="seoicon-tags"></i>
-                                            <a href="#">Video</a>
+                                            {{-- <a href="#">{{$firstPost->categories->categoryname}}</a> --}}
                                         </span>
 
                                         <span class="post__comments">
@@ -153,9 +109,9 @@
                 <article class="hentry post post-standard has-post-thumbnail sticky">
 
                         <div class="post-thumb">
-                            <img src="app/img/2.png" alt="seo">
+                            <img src="{{$secondPost->featured}}" alt="{{$secondPost->posttitle}}">
                             <div class="overlay"></div>
-                            <a href="app/img/2.png" class="link-image js-zoom-image">
+                            <a href="{{$secondPost->featured}}" class="link-image js-zoom-image">
                                 <i class="seoicon-zoom"></i>
                             </a>
                             <a href="#" class="link-post">
@@ -167,8 +123,8 @@
 
                             <div class="post__content-info">
 
-                                    <h2 class="post__title entry-title ">
-                                        <a href="15_blog_details.html">The Important & Standard Post Format</a>
+                                    <h2 class="post__title entry-title text-center">
+                                        <a href="#">{{$secondPost->posttitle}}</a>
                                     </h2>
 
                                     <div class="post-additional-info">
@@ -178,7 +134,7 @@
                                             <i class="seoicon-clock"></i>
 
                                             <time class="published" datetime="2016-04-17 12:00:00">
-                                                April 17, 2016
+                                                {{$secondPost->created_at->toFormattedDateString()}}
                                             </time>
 
                                         </span>
@@ -203,9 +159,9 @@
                 <article class="hentry post post-standard has-post-thumbnail sticky">
 
                         <div class="post-thumb">
-                            <img src="app/img/3.jpg" alt="seo">
+                            <img src="{{$thirdPost->featured}}" alt="{{$thirdPost->posttitle}}">
                             <div class="overlay"></div>
-                            <a href="app/img/3.jpg" class="link-image js-zoom-image">
+                            <a href="{{$thirdPost->featured}}" class="link-image js-zoom-image">
                                 <i class="seoicon-zoom"></i>
                             </a>
                             <a href="#" class="link-post">
@@ -217,8 +173,8 @@
 
                             <div class="post__content-info">
 
-                                    <h2 class="post__title entry-title ">
-                                        <a href="15_blog_details.html">The Important & Standard Post Format</a>
+                                    <h2 class="post__title entry-title text-center">
+                                        <a href="#">{{$thirdPost->posttitle}}</a>
                                     </h2>
 
                                     <div class="post-additional-info">
@@ -228,7 +184,7 @@
                                             <i class="seoicon-clock"></i>
 
                                             <time class="published" datetime="2016-04-17 12:00:00">
-                                                April 17, 2016
+                                                {{$thirdPost->created_at->diffForHumans()}}
                                             </time>
 
                                         </span>
@@ -261,7 +217,7 @@
                     <div class="row">
                         <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                             <div class="heading">
-                                <h4 class="h1 heading-title">Laravel 5.3</h4>
+                                <h4 class="h1 heading-title">{{$careers->categoryname}}</h4>
                                 <div class="heading-line">
                                     <span class="short-line"></span>
                                     <span class="long-line"></span>
@@ -271,7 +227,19 @@
                     </div>
                     <div class="row">
                         <div class="case-item-wrap">
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+
+                            @foreach ($careers->posts()->take(3)->get() as $post)
+                            {{-- @foreach ($careers as $career) --}}
+                            <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12">
+                                    <div class="case-item">
+                                        <div class="case-item__thumb mouseover poster-3d lightbox shadow animation-disabled" data-offset="5">
+                                            <img src="app/img/2.png" alt="our case">
+                                        </div>
+                                        <h6 class="case-item__title">{{$post->posttitle}}</h6>
+                                    </div>
+                                </div>
+                            @endforeach
+                            {{-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                 <div class="case-item">
                                     <div class="case-item__thumb">
                                         <img src="app/img/3.jpg" alt="our case">
@@ -296,7 +264,7 @@
                                     </div>
                                     <h6 class="case-item__title">quod mazim placerat facer possim assum</h6>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -557,16 +525,16 @@
 
 <!-- JS Script -->
 
-<script src="app/js/jquery-2.1.4.min.js"></script>
-<script src="app/js/crum-mega-menu.js"></script>
-<script src="app/js/swiper.jquery.min.js"></script>
-<script src="app/js/theme-plugins.js"></script>
-<script src="app/js/main.js"></script>
-<script src="app/js/form-actions.js"></script>
+<script src="{{ asset('app/js/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('app/js/crum-mega-menu.js') }}"></script>
+<script src="{{ asset('app/js/swiper.jquery.min.js') }}"></script>
+<script src="{{ asset('app/js/theme-plugins.js') }}"></script>
+<script src="{{ asset('app/js/main.js') }}"></script>
+<script src="{{ asset('app/js/form-actions.js') }}"></script>
 
-<script src="app/js/velocity.min.js"></script>
-<script src="app/js/ScrollMagic.min.js"></script>
-<script src="app/js/animation.velocity.min.js"></script>
+<script src="{{ asset('app/js/velocity.min.js') }}"></script>
+<script src="{{ asset('app/js/ScrollMagic.min.js') }}"></script>
+<script src="{{ asset('app/js/animation.velocity.min.js') }}"></script>
 
 
 <!-- ...end JS Script -->
